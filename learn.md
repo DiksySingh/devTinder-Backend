@@ -1,0 +1,14 @@
+- Learn about Monolithic and Microservices. 
+- Learn about basic of LLD vs HLD.
+- Learn about Express.js and REST APIs.
+- Create a repository on github.
+- Initialize the repository - npm init.
+- What is node_modules, package.lock-json, package.json?
+- Difference between caret and tilde.
+- Install express and nodemon.
+- Make changes to the scripts in the package.json.
+- What is "-g" used while installing any npm package?
+- What is dependencies in package.json?
+- Create a server using express and listen the incoming request on port 7777.
+- Create route for /test, /hello, /data, etc.
+- Learn about requests and request handler.
