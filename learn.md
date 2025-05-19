@@ -54,5 +54,9 @@
 
 - Diff JS Object vs JSON
 - Send dynamic JSON data from the req.body from the Postman.
-
-
+- Add express.json middleware to your app.
+- Make your /signup api dynamic to receive data from the end user
+- Use read method of mongoose which are findOne, find, findById etc.
+- Perform CRUD operation on the database
+- Difference between PATCH and PUT
+- Explore Mongoose Documentation for Model Methods
