@@ -29,4 +29,26 @@
 - Use of regex in routes /a/, /.*fly$/
 
 
+- Multiple Route Handlers - Play with the code
+- next();
+- next function and errors along with the res.send().
+- app.use("/route", rH, [rH2, rH3], rH4, rH5).
+- What is middlewares? Why do we need it?
+- How Express.js basically handles requests behind the scenes.
+- HTTP status code
+- app.use vs app.all
+- Write a dummy admin auth middleware for admin.
+- Write a dummy auth middleware for all user routes, create a directory for middleware and import the middleware in the app.js.
+- Error handling - try..catch, (err, req, res, next)
+
+- Create a free cluster in the mongo atlas site.
+- Install mongoose library
+- Connect your application to the database <connection-url>/devTinder
+- Call the connectDb function and connect to the database before starting application on 7777
+- What is Schema in mongoose?
+- Create a directory models in src and then add user.js and then create a userSchema and user model.
+- Create a POST: /signup API to add data to database.
+- Push some documents using API calls from postman.
+- Error handling using try..catch
+
 
