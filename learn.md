@@ -7,7 +7,7 @@
 - Difference between caret and tilde.
 - Install express and nodemon.
 - Make changes to the scripts in the package.json.
-- What is "-g" used while installing any npm package?
+- What is "-g" used while installing nodemon npm package?
 - What is dependencies in package.json?
 - Create a server using express and listen the incoming request on port 7777.
 - Create route for /test, /hello, /data, etc.
