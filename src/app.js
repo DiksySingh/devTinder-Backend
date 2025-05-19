@@ -1,9 +1,11 @@
-require('dotenv').config();
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require('express');
 const app = express();
 const { connectDB } = require("./config/database.js");
 const User = require("./models/user");
 
+app.use(express.json());   //
 app.post("/signup", async (req, res) => {
     const userObj = {
         firstName: "Dikshant",

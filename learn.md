@@ -52,3 +52,7 @@
 - Error handling using try..catch
 
 
+- Diff JS Object vs JSON
+- Send dynamic JSON data from the req.body from the Postman.
+
+
