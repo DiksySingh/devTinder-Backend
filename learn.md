@@ -70,3 +70,4 @@
 - Install validator package of npm - npm i validator
 - Use validator for validating email in the schema level or api level.
 - Explore validator's different methods for validating the schema or api.
+- NEVER TRUST req.body as it can have any type of malicious data in it.
