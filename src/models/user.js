@@ -13,7 +13,8 @@ const userSchema = new Schema({
         lowercase: true,
         unique: true,
         trim: true,
-        required: true
+        required: true,
+        match: [/^\S+@\S+\.\S+$/, "Invalid email format"]
     },
     password: {
         type: String,
@@ -39,7 +40,12 @@ const userSchema = new Schema({
         default: "Hey there! I am using DevTinder."
     },
     skills: {
-        type: [String]
+        type: [String],
+        validate(value) {
+            if(value.length > 5) {
+                throw new Error("Only 5 skills are allowed for a user")
+            }
+        }
     }
 }, {timestamps: true});
 

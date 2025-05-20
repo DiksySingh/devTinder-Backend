@@ -5,7 +5,7 @@ const app = express();
 const { connectDB } = require("./config/database.js");
 const User = require("./models/user");
 
-app.use(express.json());  
+app.use(express.json());
 
 //Add userData to database
 app.post("/signup", async (req, res) => {
@@ -26,7 +26,7 @@ app.post("/signup", async (req, res) => {
 app.get("/user", async (req, res) => {
     try {
         const email = req.body.email;
-        const user = await User.findOne({emailId: email});
+        const user = await User.findOne({ emailId: email });
         res.send(user);
     } catch (error) {
         res.status(500).send("Error fetching data from database");
@@ -37,7 +37,7 @@ app.get("/user", async (req, res) => {
 app.get("/feed", async (req, res) => {
     try {
         const allUsers = await User.find();
-        if(allUsers.length === 0) {
+        if (allUsers.length === 0) {
             res.status(404).send("No Users Found");
         } else {
             res.send(allUsers);
@@ -46,6 +46,27 @@ app.get("/feed", async (req, res) => {
         res.status(500).send("Error fetching data from database");
     }
 });
+
+app.patch("/user/:userId", async (req, res) => {
+    const userId = req.params.userId;
+    const data = req.body;
+    try {
+        const ALLOWED_UPDATES = ["age", "gender", "photoUrl", "about", "skills"];
+        const isAllowedUpdate = Object.keys(data).every(key => ALLOWED_UPDATES.includes(key));
+        if (!isAllowedUpdate) {
+            throw new Error("Update is no allowed");
+        }
+
+        const updatedData = await User.findByIdAndUpdate({ userId }, data, {
+            returnDocument: "before",
+        });
+        console.log(updatedData);
+        res.status(200).send("Updated User Data Successfully")
+
+    } catch (error) {
+        res.status(500).send("UPDATE FAILED: "+ error.message);
+    }
+})
 
 connectDB().then(() => {
     console.log("Database Connected Successfully");

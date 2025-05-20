@@ -65,3 +65,8 @@
 - Explore SchemaTypes options from Mongoose Document for Schema Validation. (eg. required, default, unique, minLength, maxLength, create custom validation function,  etc.).
 - Put all appropriate validations on each field in all schema.
 - Add timestamps in all the schema
+- Add API level validation on user update and user signup api
+- Data Sanitization - Add API validation for each field
+- Install validator package of npm - npm i validator
+- Use validator for validating email in the schema level or api level.
+- Explore validator's different methods for validating the schema or api.
