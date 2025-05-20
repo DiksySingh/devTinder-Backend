@@ -60,3 +60,8 @@
 - Perform CRUD operation on the database
 - Difference between PATCH and PUT
 - Explore Mongoose Documentation for Model Methods
+
+
+- Explore SchemaTypes options from Mongoose Document for Schema Validation. (eg. required, default, unique, minLength, maxLength, create custom validation function,  etc.).
+- Put all appropriate validations on each field in all schema.
+- Add timestamps in all the schema
