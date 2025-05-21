@@ -4,23 +4,58 @@ const express = require('express');
 const app = express();
 const { connectDB } = require("./config/database.js");
 const User = require("./models/user");
+const { validateSignUpData } = require("./utils/validation.js");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 
 //Add userData to database
 app.post("/signup", async (req, res) => {
-    const userData = req.body;
-    //Creating a new instance of the User model
     try {
-        const emailId = userData.emailId;
-        const user = new User(userData);
+        //Validation of data
+        validateSignUpData(req);
+
+        const {firstName, lastName, emailId, password} = req.body;
+        //Encrypt password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        //Creating a new instance of the User model
+        const user = new User({
+            firstName,
+            lastName,
+            emailId,
+            password: hashedPassword
+        });
         await user.save();
-        res.send("User saved successfully");
+        res.status(201).send("User saved successfully");
     }
     catch (error) {
-        res.status(500).send("Error saving data to database");
+        res.status(500).send("ERROR : " + error.message);
     }
 });
+
+app.post("/login", async (req, res) => {
+    try {
+        const {emailId, password} = req.body;
+        if(!validator.isEmail(emailId)) {
+            throw new Error("Email is not valid!");
+        }
+
+        const userData = await User.findOne({emailId});
+        if(!userData) {
+            throw new Error("Invalid credentials");
+        }
+        
+        const isPasswordValid = await bcrypt.compare(password, userData.password);
+        if(!isPasswordValid) {
+            throw new Error("Invalid credentials");
+        }
+        res.status(201).send("Login Successful!!");
+    } catch (error) {
+        res.status(500).send("ERROR : " + error.message);
+    }
+})
 
 //Get user by email
 app.get("/user", async (req, res) => {
@@ -64,7 +99,7 @@ app.patch("/user/:userId", async (req, res) => {
         res.status(200).send("Updated User Data Successfully")
 
     } catch (error) {
-        res.status(500).send("UPDATE FAILED: "+ error.message);
+        res.status(500).send("UPDATE FAILED: " + error.message);
     }
 })
 

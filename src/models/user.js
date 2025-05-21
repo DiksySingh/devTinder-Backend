@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const validator = require("validator");
 const userSchema = new Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        minLength: 3,
+        maxLength: 20
     },
     lastName: {
-        type: String
+        type: String,
     },
     emailId: {
         type: String,
@@ -14,11 +17,20 @@ const userSchema = new Schema({
         unique: true,
         trim: true,
         required: true,
-        match: [/^\S+@\S+\.\S+$/, "Invalid email format"]
+        validate(value) {
+            if(!validator.isEmail(value)){
+                throw new Error("Invalid Email ID");
+            }
+        }
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        validate(value) {
+            if(!validator.isStrongPassword(value)) {
+                throw new Error("Please enter a strong password");
+            }
+        }
     },
     age: {
         type: Number,
@@ -33,7 +45,8 @@ const userSchema = new Schema({
         }
     },
     photoUrl: {
-        type: String
+        type: String,
+        default: "https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg"
     },
     about: {
         type: String,

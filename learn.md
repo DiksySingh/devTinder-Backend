@@ -71,3 +71,10 @@
 - Use validator for validating email in the schema level or api level.
 - Explore validator's different methods for validating the schema or api.
 - NEVER TRUST req.body as it can have any type of malicious data in it.
+
+
+- Validate data in Signup API
+- Install bcrypt package
+- Create hashedPassword using bcrypt.hash & save the user with encrypted password to the database.
+- Create login API
+- Compare passwords and throw error if email or password is invalid
