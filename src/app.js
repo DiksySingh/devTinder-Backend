@@ -9,67 +9,15 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const authRouter = require("./routes/authRouter");
+const profileRouter = require("./routes/profileRouter");
 
 app.use(express.json());
 app.use(cookieParser());
 
-//Add userData to database
-app.post("/signup", async (req, res) => {
-    try {
-        //Validation of data
-        validateSignUpData(req);
+app.use("/", authRouter);
+app.use("/", profileRouter);
 
-        const {firstName, lastName, emailId, password} = req.body;
-        //Encrypt password
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
-        //Creating a new instance of the User model
-        const user = new User({
-            firstName,
-            lastName,
-            emailId,
-            password: hashedPassword
-        });
-        await user.save();
-        res.status(201).send("User saved successfully");
-    }
-    catch (error) {
-        res.status(500).send("ERROR : " + error.message);
-    }
-});
-
-app.post("/login", async (req, res) => {
-    try {
-        const {emailId, password} = req.body;
-        if(!validator.isEmail(emailId)) {
-            throw new Error("Email is not valid!");
-        }
-
-        const userData = await User.findOne({emailId});
-        if(!userData) {
-            throw new Error("Invalid credentials");
-        }
-        
-        const isPasswordValid = await userData.validatePassword(password);
-        if(!isPasswordValid) {
-            throw new Error("Invalid credentials");
-        }
-        const token = await userData.getJWT();
-        res.cookie("token", token);
-        res.status(201).send("Login Successful!!");
-    } catch (error) {
-        res.status(500).send("ERROR : " + error.message);
-    }
-});
-
-app.get("/profile", userAuth, async (req, res) => {
-    try {
-        const user = req.user;
-        res.status(201).send(user);
-    } catch (error) {
-        res.status(500).send("ERROR : " + error.message);
-    }
-});
 
 //Get user by email
 app.get("/user", async (req, res) => {
