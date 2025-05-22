@@ -104,3 +104,14 @@
 - Create PATCH /profile/edit API
 - HW - Create PATCH /profile/password API => Forgot Password API
 - Make sure you validate all data in every POST, PATCH APIs.
+
+
+- Create connectionRequest model
+- Create POST /request/send/:status/:receiverId for sending connection request.
+- Apply validation to the above API such as for status, not sending connection request to same user and yourself as well, also check whether the user to whom you are sending connection exists of not, etc. (Think about all corner cases).
+- Read about $or and $and query. Also explore different method used in mongoDB.
+- Create a middleware .pre for the connectionRequestSchema which checks that the user is not sending request to itself.
+- Read about indexes in MongoDb**
+- Read about compound indexes. 
+- Advantages and disadvantages to creating indexes.
+- Study about why not to use more indexes in your schema. 
