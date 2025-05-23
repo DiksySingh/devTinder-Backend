@@ -22,45 +22,47 @@ const validateProfileUpdateData = (req) => {
     }
     const { firstName, lastName, age, gender, photoUrl, about, skills } = req.body;
     if (firstName && !validator.isLength(firstName, { min: 3, max: 20 })) {
-        return res.status(400).json({
-            success: false,
-            message: "FirstName should be 3-20 characters"
-        });
-        // throw new Error("FirstName should be 3-20 characters");
-    } else if (lastName && !validator.isLength(lastName, {max: 20})) {
-        return res.status(400).json({
-            success: false,
-            message: "LastName should be of maximum 20 characters"
-        });
-    } else if (age && (age < 18)) {
-        return res.status(400).json({
-            success: false,
-            message: "Age should be greater than 18"
-        });
-    } else if (!["Male", "Female", "Other"].includes(gender)) {
-        return res.status(400).json({
-            success: false,
-            message: "Invalid Gender"
-        });
-    } else if (!validator.isURL(photoUrl)) {
-        return res.status(400).json({
-            success: false,
-            message: "Photo URL is not valid"
-        });
-    } else if (about && !validator.isLength(about, { min: 10, max: 100 })) {
-        return res.status(400).json({
-            success: false,
-            message: "About should be 10-100 characters"
-        });
-    } else if (skills && !Array.isArray(skills) && skills.isLength(skills, { max: 10 })) {
-        return res.status(400).json({
-            success: false,
-            message: "Maximum 10 skills are allowed"
-        });
+        throw new Error("FirstName should be 3-20 characters.");
     }
+
+    if (lastName && !validator.isLength(lastName, { max: 20 })) {
+        throw new Error("LastName should be a maximum of 20 characters.");
+    }
+
+    if (age && (age < 18)) {
+        throw new Error("Age should be 18 or above.");
+    }
+
+    if (gender && !["Male", "Female", "Other"].includes(gender)) {
+        throw new Error("Gender must be Male, Female, or Other.");
+    }
+
+    if (photoUrl && !validator.isURL(photoUrl)) {
+        throw new Error("Photo URL is not valid.");
+    }
+
+    if (about && !validator.isLength(about, { min: 10, max: 100 })) {
+        throw new Error("About should be between 10 to 100 characters.");
+    }
+
+    if (skills && (!Array.isArray(skills) || skills.length > 10)) {
+        throw new Error("Skills should be maximum of 10.");
+    }
+};
+
+const validatePasswordUpdateData = (req) => {
+        const loggedInUser = req.user;
+        const {oldPassword, newPassword} = req.body;
+        
+        if (newPassword === oldPassword) {
+            throw new Error("New password should not be same as old password");
+        } else if (!validator.isStrongPassword(newPassword)) {
+            throw new Error("Please enter a strong new password");  
+        }
 };
 
 module.exports = {
     validateSignUpData,
-    validateProfileUpdateData
+    validateProfileUpdateData,
+    validatePasswordUpdateData
 }

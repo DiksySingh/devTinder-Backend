@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const connectionRequestSchema = new Schema({
-    senderId: {
+    fromUserId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    receiverId: {
+    toUserId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
